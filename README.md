@@ -57,8 +57,14 @@ After installation, you can immediately use screenshots in Claude Code:
 ### 3. Management Commands
 
 ```powershell
-# Check installation status
+# Check detailed status (scheduled task + current job)
 .\WinCCSnap.ps1 info
+
+# Start immediately after restart (current session only)
+.\WinCCSnap.ps1 restart
+
+# Test if it's working correctly
+.\WinCCSnap.ps1 test
 
 # Remove completely
 .\WinCCSnap.ps1 remove
@@ -87,6 +93,22 @@ After installation, you can immediately use screenshots in Claude Code:
 - PowerShell 5.1 or later
 - .NET Framework 4.0 or later (built-in)
 - Administrator privileges for installation
+
+## 🔄 After Restart
+
+### Why it might not work immediately
+- **Scheduled Task** starts automatically but takes 1-2 minutes after login
+- **PowerShell Job** (temporary) disappears after restart
+
+### Solutions
+1. **Wait 1-2 minutes** for scheduled task to start automatically
+2. **Manual start**: Run `.\WinCCSnap.ps1 restart` to start immediately
+3. **Verify**: Run `.\WinCCSnap.ps1 test` to check functionality
+
+### Understanding the Architecture
+- **Scheduled Task**: Persistent system service, starts at login
+- **PowerShell Job**: Temporary session process for immediate testing
+- Use `restart` command after restart to bridge the gap
 
 ## 🛠️ Development
 

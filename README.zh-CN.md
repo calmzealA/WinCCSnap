@@ -57,8 +57,14 @@ iwr -useb https://raw.githubusercontent.com/calmzealA/WinCCSnap/main/WinCCSnap.p
 ### 3. 管理命令
 
 ```powershell
-# 检查安装状态
+# 检查详细状态（计划任务+当前作业）
 .\WinCCSnap.ps1 info
+
+# 重启后立即启动（仅当前会话）
+.\WinCCSnap.ps1 restart
+
+# 测试功能是否正常
+.\WinCCSnap.ps1 test
 
 # 完全移除
 .\WinCCSnap.ps1 remove
@@ -87,6 +93,22 @@ iwr -useb https://raw.githubusercontent.com/calmzealA/WinCCSnap/main/WinCCSnap.p
 - PowerShell 5.1 或更高版本
 - .NET Framework 4.0 或更高版本（内置）
 - 安装需要管理员权限
+
+## 🔄 重启后的使用
+
+### 为什么重启后可能不生效
+- **计划任务**会自动启动，但需要登录后1-2分钟
+- **PowerShell作业**（临时进程）重启后会消失
+
+### 解决方案
+1. **等待1-2分钟**让计划任务自动启动
+2. **手动启动**：运行 `.\WinCCSnap.ps1 restart` 立即生效
+3. **验证**：运行 `.\WinCCSnap.ps1 test` 检查功能
+
+### 架构理解
+- **计划任务**：持久化系统服务，登录时自动启动
+- **PowerShell作业**：临时会话进程，用于立即测试
+- 使用 `restart` 命令在重启后桥接空档时间
 
 ## 🛠️ 开发
 
